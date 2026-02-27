@@ -92,6 +92,14 @@ class AnthropicAdapter:
                     # Tool results are part of user messages in Anthropic format
                     text_parts.append(str(block.get("content", "")))
 
+        # KNOWN LIMITATION: When an Anthropic message contains multiple content
+        # blocks (e.g. interleaved text and tool_result blocks), all text-like
+        # parts are collapsed into a single space-joined string in the canonical
+        # "content" field.  Structural information about the original block
+        # boundaries — such as which text block preceded which tool_result — is
+        # not preserved.  Callers that need full fidelity for multi-block
+        # messages should operate on the raw Anthropic format directly rather
+        # than routing through the canonical representation.
         return {
             "role": role,
             "content": " ".join(text_parts),

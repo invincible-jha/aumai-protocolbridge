@@ -48,7 +48,9 @@ class A2AAdapter:
 
         name: str = skill.get("name", "")
         description: str = skill.get("description", "")
-        parameters: dict[str, Any] = skill.get("parameters", skill.get("inputSchema", {}))
+        parameters: dict[str, Any] = skill.get(
+            "parameters", skill.get("inputSchema", {})
+        )
         returns: dict[str, Any] = skill.get("returns", skill.get("outputSchema", {}))
 
         return ToolDefinition(

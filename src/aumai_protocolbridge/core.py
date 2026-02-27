@@ -218,11 +218,12 @@ class ProtocolBridge:
             issues.append("Missing required field: name")
 
         if protocol == ProtocolType.openai:
-            if "type" not in tool_data and not (
-                "type" in tool_data.get("function", {})
+            if "type" not in tool_data and "type" not in tool_data.get(
+                "function", {}
             ):
                 issues.append(
-                    "OpenAI tools should have type='function' wrapper or bare function dict."
+                    "OpenAI tools should have type='function' wrapper "
+                    "or bare function dict."
                 )
 
         if protocol == ProtocolType.anthropic:
